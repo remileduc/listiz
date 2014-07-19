@@ -1,0 +1,107 @@
+/*
+listis is a TODO list for Firefox OS that supports many lists, and even sublists!!!
+Copyright © 2014 xinouch
+remi.ducceschi@gmail.com
+
+This file is part of listis
+
+listis is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+html, body
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	display: flex;
+	flex-flow: column;
+}
+
+header, footer
+{
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+header
+{
+	order: 0;
+	margin-bottom: 1%;
+}
+
+footer
+{
+	order: 30;
+	margin-top: auto;
+}
+
+.hidden
+{
+	display: none !important;
+	opacity: 0;
+}
+
+/*********** MEDIA QUERIES ***********/
+
+@media (orientation: landscape)
+{
+	body > footer
+	{
+		padding: 0.5%;
+	}
+
+	body > footer > p
+	{
+		display: none;
+	}
+}
+
+/*********** ANIMATION ***********/
+
+/* this is not a transition as transition are not easy with display:none */
+.appears:not(.hidden)
+{
+	animation-name: apparition;
+	animation-duration: 1s;
+	-webkit-animation-name: apparition;
+	-webkit-animation-duration: 1s;
+}
+@keyframes apparition
+{
+	from
+	{
+		opacity: 0;
+	}
+	to
+	{
+		opacity: 1;
+	}
+}
+@-webkit-keyframes apparition
+{
+	from
+	{
+		opacity: 0;
+	}
+	to
+	{
+		opacity: 1;
+	}
+}
+
+
