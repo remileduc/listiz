@@ -1,4 +1,4 @@
-listis
+listiz
 ======
 
 Firefox OS TODO list that supports many lists, and even sublists!!!

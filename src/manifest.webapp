@@ -1,6 +1,6 @@
 {
-	"name": "listis",
-	"description": "listis is a TODO list for Firefox OS that supports many lists, and even sublists!!! Works only on Firefox OS 1.3 or above, or with Firefox 28 or above (for the android version).",
+	"name": "listiz",
+	"description": "listiz is a TODO list for Firefox OS that supports many lists, and even sublists!!! Works only on Firefox OS 1.3 or above, or with Firefox 28 or above (for the android version).",
 	"version": "1.0",
 	"developer": {
 		"name": "xinouch",
@@ -18,10 +18,10 @@
 	"default_locale": "en",
 	"locales": {
 		"en": {
-			"description": "listis is a TODO list for Firefox OS that supports many lists, and even sublists!!! Works only on Firefox OS 1.3 or above, or with Firefox 28 or above (for the android version)."
+			"description": "listiz is a TODO list for Firefox OS that supports many lists, and even sublists!!! Works only on Firefox OS 1.3 or above, or with Firefox 28 or above (for the android version)."
 		},
 		"fr": {
-			"description": "listis est une app permettant de créer et gérer des listes de choses à faire. Il est possible de faire plusieurs listes, et même des sous-listes !!! Ne marche que sur Firefox OS 1.3 ou supérieur, ou avec Firefox 28 ou plus installé (pour la version android)."
+			"description": "listiz est une app permettant de créer et gérer des listes de choses à faire. Il est possible de faire plusieurs listes, et même des sous-listes !!! Ne marche que sur Firefox OS 1.3 ou supérieur, ou avec Firefox 28 ou plus installé (pour la version android)."
 		}
 	}
 }
