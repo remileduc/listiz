@@ -17,7 +17,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 "use strict";
 
@@ -28,40 +28,41 @@ function ModelObject ()
 {
 	Object.defineProperties(this, {
 		/** the type (ModelObject.LIST or ModelObject.TEXT) */
-		"type": {
-			enumerable: true,
-			writable: true
+		"type" : {
+			enumerable : true,
+			writable : true
 		},
 
 		/** the title (name) of the object */
-		"title": {
-			value: "",
-			enumerable: true,
-			writable: true
+		"title" : {
+			value : "",
+			enumerable : true,
+			writable : true
 		},
 
 		/** the description of the object */
-		"color": {
-			value: new Color(),
-			enumerable: true,
-			writable: true
+		"color" : {
+			value : new Color(),
+			enumerable : true,
+			writable : true
 		},
-		
+
 		/** the content of the object */
-		"content": {
-			value: "",
-			enumerable: true,
-			writable: true
+		"content" : {
+			value : "",
+			enumerable : true,
+			writable : true
 		},
-		
+
 		/** export the object in a string */
-		"toString": {
-			value: function(){},
-			writable: true
+		"toString" : {
+			value : function ()
+			{
+			},
+			writable : true
 		}
 	});
 }
-
 
 /**
  * A color
@@ -70,33 +71,31 @@ function Color ()
 {
 	Object.defineProperties(this, {
 		/** the red component */
-		"red": {
-			value: 0,
-			enumerable: true,
-			writable: true
+		"red" : {
+			value : 0,
+			enumerable : true,
+			writable : true
 		},
 
 		/** the blue component */
-		"blue": {
-			value: 0,
-			enumerable: true,
-			writable: true
+		"blue" : {
+			value : 0,
+			enumerable : true,
+			writable : true
 		},
-		
+
 		/** the green component */
-		"green": {
-			value: 0,
-			enumerable: true,
-			writable: true
+		"green" : {
+			value : 0,
+			enumerable : true,
+			writable : true
 		},
-		
+
 		/** the alpha component */
-		"alpha": {
-			value: 1,
-			enumerable: true,
-			writable: true
+		"alpha" : {
+			value : 1,
+			enumerable : true,
+			writable : true
 		}
 	});
 }
-
-

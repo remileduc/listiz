@@ -106,5 +106,3 @@ Object.defineProperty(ModelObject, "LIST", {value: "list"});
 
 // héritage
 ModelList.prototype = new ModelObject();
-
-

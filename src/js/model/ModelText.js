@@ -17,7 +17,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 "use strict";
 
@@ -28,30 +28,31 @@ function ModelText ()
 {
 	Object.defineProperties(this, {
 		/** the type (ModelObject.LIST or ModelObject.TEXT) */
-		"type": {
-			value: ModelObject.TEXT,
-			writable: false
-		},
-		
-		/** tells if the text is markdown formatted or not */
-		"useMarkdown": {
-			value: false,
-			enumerable: true,
-			writable: true
+		"type" : {
+			value : ModelObject.TEXT,
+			writable : false
 		},
 
-		
+		/** tells if the text is markdown formatted or not */
+		"useMarkdown" : {
+			value : false,
+			enumerable : true,
+			writable : true
+		},
+
 		/** export the object in a string */
-		"toString": {
-			value: function(){},
-			writable: false
+		"toString" : {
+			value : function ()
+			{
+			},
+			writable : false
 		}
 	});
 }
 
-Object.defineProperty(ModelObject, "TEXT", {value: "text"});
+Object.defineProperty(ModelObject, "TEXT", {
+	value : "text"
+});
 
 // héritage
 ModelText.prototype = new ModelObject();
-
-
