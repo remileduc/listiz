@@ -22,53 +22,69 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 "use strict";
 
 /**
- * model object that contains only the basic informations.
+ * represents the parameters used in the program
  */
-function ModelObject ()
+function ModelParameters ()
 {
 	Object.defineProperties(this, {
-		/** the type (ModelObject.LIST or ModelObject.TEXT) */
-		"type": {
+		/** the criterion we use to sort the lists in the main screen */
+		"sortType": {
+			value: ModelParameters.NAME,
 			enumerable: true,
 			writable: true
 		},
 
-		/** the title (name) of the object */
-		"title": {
-			value: "",
+		/** if the sort is ascendant or descendant */
+		"sortOrder": {
+			value: ModelParameters.ASCENDANT,
 			enumerable: true,
 			writable: true
 		},
 
-		/** the description of the object */
-		"color": {
+		/** the default color when we create a list */
+		"defaultColor": {
 			value: new Color(),
 			enumerable: true,
 			writable: true
 		},
-
-		/** the content of the object */
-		"content": {
-			value: "",
+		
+		/** tells if the done items must be put at the end of the list or not */
+		"doneAtEnd": {
+			value: true,
 			enumerable: true,
 			writable: true
 		},
-
-		/** the date of creation */
-		"date": {
-			value: new Date().getTime(),
-			enumerable: true
-		},
-
-		/** export the object in a string */
-		"toString": {
-			value: function ()
-			{
-			},
+		
+		/** tells if the text editor should use markdown or not */
+		"useMarkDown": {
+			value: false,
+			enumerable: true,
 			writable: true
 		}
 	});
 }
 
+Object.defineProperties(ModelParameters, {
+	"ASCENDANT": {
+		value: "ascendant"
+	},
+
+	"DESCENDANT": {
+		value: "descendant"
+	},
+
+	"DATE": {
+		value: "date"
+	},
+
+	"NAME": {
+		value: "name"
+	},
+
+	"COLOR": {
+		value: "color"
+	}
+});
+
 // héritage
-ModelObject.prototype = Object.create(BasicModelObject.prototype);
+ModelParameters.prototype = Object.create(BasicModelObject.prototype);

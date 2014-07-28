@@ -22,37 +22,57 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 "use strict";
 
 /**
- * Model for a text object
+ * basic model object that contains only the basic informations.
  */
-function ModelText ()
+function BasicModelObject ()
 {
 	Object.defineProperties(this, {
-		/** the type (ModelObject.LIST or ModelObject.TEXT) */
-		"type" : {
-			value : ModelObject.TEXT,
-			writable : false
-		},
-
-		/** tells if the text is markdown formatted or not */
-		"useMarkdown" : {
-			value : false,
-			enumerable : true,
-			writable : true
-		},
-
-		/** export the object in a string */
-		"toString" : {
-			value : function ()
-			{
-			},
-			writable : false
+		/** the ID of the object in the database */
+		"id": {
+			enumerable: true,
+			writable: true
 		}
 	});
 }
 
-Object.defineProperty(ModelObject, "TEXT", {
-	value : "text"
-});
+/**
+ * A color
+ */
+function Color ()
+{
+	Object.defineProperties(this, {
+		/** the name of the color */
+		"name": {
+			enumerable: true,
+			writable: true
+		},
+		
+		/** the red component */
+		"red": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
 
-// héritage
-ModelText.prototype = Object.create(ModelObject.prototype);
+		/** the blue component */
+		"blue": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
+
+		/** the green component */
+		"green": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
+
+		/** the alpha component */
+		"alpha": {
+			value: 1,
+			enumerable: true,
+			writable: true
+		}
+	});
+}

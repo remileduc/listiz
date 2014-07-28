@@ -43,9 +43,8 @@ function ModelList (parent)
 		
 		/** tells if the item is done or not (stripped) */
 		"parentElement": {
-			value: parent || null,
-			writable: true,
-			enumerable: true
+			value: null,
+			writable: true
 		},
 		
 		/** tells if the item is done or not (stripped) */
@@ -58,13 +57,16 @@ function ModelList (parent)
 		/** 
 		 * at a sub-element at the given position
 		 * @param element the new element
-		 * @param position the position where insert element
+		 * @param position the position where insert element (at the end by default)
 		 */
 		"addSubElement": {
 			value: function(element, position)
 			{
 				element.parentElement = this;
-				this.subElements.splice(position, 0, element);
+				if (typeof position === "undefined")
+					this.subElements.push(element);
+				else
+					this.subElements.splice(position, 0, element);
 			}
 		},
 		
@@ -100,9 +102,12 @@ function ModelList (parent)
 			writable: false
 		}
 	});
+	
+	if (!(typeof parent === "undefined"))
+		parent.addSubElement(this);
 }
 
 Object.defineProperty(ModelObject, "LIST", {value: "list"});
 
 // héritage
-ModelList.prototype = new ModelObject();
+ModelList.prototype = Object.create(ModelObject.prototype);
