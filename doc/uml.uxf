@@ -5,7 +5,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>390</x>
-      <y>220</y>
+      <y>320</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
@@ -20,7 +20,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>330</x>
-      <y>0</y>
+      <y>70</y>
       <w>240</w>
       <h>120</h>
     </coordinates>
@@ -39,7 +39,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>140</x>
-      <y>350</y>
+      <y>450</y>
       <w>340</w>
       <h>100</h>
     </coordinates>
@@ -57,7 +57,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>0</x>
-      <y>280</y>
+      <y>380</y>
       <w>210</w>
       <h>150</h>
     </coordinates>
@@ -69,7 +69,7 @@ lt=&lt;&lt;&lt;-</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>280</x>
-      <y>240</y>
+      <y>340</y>
       <w>160</w>
       <h>130</h>
     </coordinates>
@@ -80,7 +80,7 @@ lt=&lt;&lt;&lt;-</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>510</x>
-      <y>350</y>
+      <y>450</y>
       <w>320</w>
       <h>70</h>
     </coordinates>
@@ -96,7 +96,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>460</x>
-      <y>240</y>
+      <y>340</y>
       <w>220</w>
       <h>130</h>
     </coordinates>
@@ -107,19 +107,19 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>380</x>
-      <y>90</y>
+      <y>160</y>
       <w>122</w>
-      <h>150</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>database
 lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>70;130;70;30</additional_attributes>
+    <additional_attributes>70;160;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>960</x>
-      <y>190</y>
+      <y>290</y>
       <w>180</w>
       <h>120</h>
     </coordinates>
@@ -138,7 +138,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>480</x>
-      <y>200</y>
+      <y>300</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -150,7 +150,7 @@ lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1220</x>
-      <y>350</y>
+      <y>450</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
@@ -165,7 +165,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1110</x>
-      <y>280</y>
+      <y>380</y>
       <w>190</w>
       <h>90</h>
     </coordinates>
@@ -176,7 +176,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>880</x>
-      <y>350</y>
+      <y>450</y>
       <w>330</w>
       <h>100</h>
     </coordinates>
@@ -194,7 +194,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>930</x>
-      <y>280</y>
+      <y>380</y>
       <w>90</w>
       <h>90</h>
     </coordinates>
@@ -205,7 +205,7 @@ bg=#3c7a00</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>740</x>
-      <y>280</y>
+      <y>380</y>
       <w>210</w>
       <h>150</h>
     </coordinates>
@@ -217,7 +217,7 @@ lt=&lt;&lt;&lt;-</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>750</x>
-      <y>400</y>
+      <y>500</y>
       <w>260</w>
       <h>110</h>
     </coordinates>
@@ -229,7 +229,7 @@ lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>10</x>
-      <y>400</y>
+      <y>500</y>
       <w>260</w>
       <h>110</h>
     </coordinates>
@@ -238,140 +238,45 @@ lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>130;30;90;30;90;90;240;90;240;50</additional_attributes>
   </element>
   <element>
-    <type>CustomElementImpl</type>
+    <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>140</x>
-      <y>510</y>
-      <w>341</w>
-      <h>41</h>
+      <x>960</x>
+      <y>70</y>
+      <w>210</w>
+      <h>200</h>
     </coordinates>
-    <panel_attributes>here we have a tree with
-a pointer on parent
+    <panel_attributes>/DataBase/
+--
+*- parameters*
+*- mainList*
+  -&gt; list1 (just title, date, id)
+  -&gt; list2
+  -&gt; text1
+*- Lists*
+  -&gt; list1 (full)
+  -&gt; list2
+  -&gt; text1
 bg=orange</panel_attributes>
     <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
   </element>
   <element>
-    <type>CustomElementImpl</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>880</x>
-      <y>510</y>
-      <w>331</w>
-      <h>41</h>
+      <x>840</x>
+      <y>90</y>
+      <w>140</w>
+      <h>50</h>
     </coordinates>
-    <panel_attributes>here we have a tree with
-a pointer on parent
-bg=orange</panel_attributes>
-    <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>120;30;30;30</additional_attributes>
   </element>
   <element>
-    <type>CustomElementImpl</type>
+    <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>180</x>
-      <y>0</y>
-      <w>141</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>Used to save
-elements in the
-local storage
-database of the
-browser
-bg=orange</panel_attributes>
-    <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
-  </element>
-  <element>
-    <type>CustomElementImpl</type>
-    <coordinates>
-      <x>510</x>
-      <y>430</y>
-      <w>321</w>
-      <h>41</h>
-    </coordinates>
-    <panel_attributes>we use markdown-js to parse
-the markdown.
-bg=orange</panel_attributes>
-    <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
-  </element>
-  <element>
-    <type>CustomElementImpl</type>
-    <coordinates>
-      <x>30</x>
-      <y>560</y>
-      <w>861</w>
-      <h>41</h>
-    </coordinates>
-    <panel_attributes>in HTML, it is represented by:
-&lt;li&gt;&lt;button&gt;UP/DOWN&lt;/button&gt;&lt;input&gt;TITLE&lt;/input&gt;&lt;button&gt;ADD/EXPAND&lt;/button&gt;&lt;button&gt;DEL&lt;/button&gt;&lt;/li&gt;
-bg=orange</panel_attributes>
-    <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
-  </element>
-  <element>
-    <type>CustomElementImpl</type>
-    <coordinates>
-      <x>30</x>
-      <y>140</y>
-      <w>311</w>
-      <h>131</h>
-    </coordinates>
-    <panel_attributes>The HTML page where ViewObjects are
-used have an HTML element "title" and a
-HTML element "contents".
-In the "title", we display the title of the
-ModelObject.
-In the "contents", we display the content of
-the ModelObject (text or list of items).
-bg=orange</panel_attributes>
-    <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
-  </element>
-  <element>
-    <type>CustomElementImpl</type>
-    <coordinates>
-      <x>580</x>
-      <y>0</y>
-      <w>291</w>
-      <h>131</h>
+      <x>590</x>
+      <y>70</y>
+      <w>280</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>The database contains one element
 "mainList" which contains the title of
@@ -380,47 +285,93 @@ It also contains all the saved lists,
 saved by their respective title.
 i.e: list1 contains all the elements
 added in the list named list1.
-bg=orange</panel_attributes>
+bg=blue</panel_attributes>
     <additional_attributes/>
-    <custom_code>int y=textHeight();
-
-drawRectangleRound(0,0,width,height,20,20);
-
-for(String textline : textlines) {
-	y += printCenter(textline,y);
-}</custom_code>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>960</x>
-      <y>0</y>
-      <w>180</w>
-      <h>180</h>
+      <x>180</x>
+      <y>80</y>
+      <w>120</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>/DataBase/
---
-*- mainList*
-  -&gt; list1
-  -&gt; list2
-  -&gt; text1
-*- list1*
-  -&gt; item1
-  -&gt; ...
-*- list2*
-*- text1*
-bg=orange</panel_attributes>
+    <panel_attributes>Used to save
+elements in the
+local storage
+database of the
+browser
+bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>840</x>
-      <y>20</y>
-      <w>140</w>
+      <x>40</x>
+      <y>250</y>
+      <w>320</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>The HTML page where ViewObjects are
+used have an HTML element "title" and a
+HTML element "contents".
+In the "title", we display the title of the
+ModelObject.
+In the "contents", we display the content of
+the ModelObject (text or list of items).
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>510</x>
+      <y>530</y>
+      <w>260</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>120;30;30;30</additional_attributes>
+    <panel_attributes>we use markdown-js to parse
+the markdown.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>110</x>
+      <y>600</y>
+      <w>200</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>here we have a tree with
+a pointer on parent
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>110</x>
+      <y>660</y>
+      <w>870</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>in HTML, it is represented by:
+&lt;li&gt;&lt;button&gt;UP/DOWN&lt;/button&gt;&lt;input&gt;TITLE&lt;/input&gt;&lt;button&gt;ADD/EXPAND&lt;/button&gt;&lt;button&gt;DEL&lt;/button&gt;&lt;/li&gt;
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>1010</x>
+      <y>560</y>
+      <w>200</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>here we have a tree with
+a pointer on parent
+bg=blue</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
