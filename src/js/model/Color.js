@@ -22,69 +22,51 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 "use strict";
 
 /**
- * represents the parameters used in the program
+ * A color
  */
-function ModelParameters ()
+function Color ()
 {
 	Object.defineProperties(this, {
-		/** the criterion we use to sort the lists in the main screen */
-		"sortType": {
-			value: ModelParameters.NAME,
-			enumerable: true,
-			writable: true
-		},
-
-		/** if the sort is ascendant or descendant */
-		"sortOrder": {
-			value: ModelParameters.ASCENDANT,
-			enumerable: true,
-			writable: true
-		},
-
-		/** the default color when we create a list */
-		"defaultColor": {
-			value: new Color(),
+		/** the name of the color */
+		"name": {
 			enumerable: true,
 			writable: true
 		},
 		
-		/** tells if the done items must be put at the end of the list or not */
-		"doneAtEnd": {
-			value: true,
+		/** the red component */
+		"red": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
+
+		/** the blue component */
+		"blue": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
+
+		/** the green component */
+		"green": {
+			value: 0,
+			enumerable: true,
+			writable: true
+		},
+
+		/** the alpha component */
+		"alpha": {
+			value: 1,
 			enumerable: true,
 			writable: true
 		},
 		
-		/** tells if the text editor should use markdown or not */
-		"useMarkDown": {
-			value: false,
-			enumerable: true,
-			writable: true
+		/** return a string representing the color: "rgba(r,g,b,a)" */
+		"toStringRGBA": {
+			value: function ()
+			{
+				return "rgba(" + this.red + "," + this.blue + "," + this.green + "," + this.alpha + ")";
+			}
 		}
 	});
 }
-
-Object.defineProperties(ModelParameters, {
-	"ASCENDANT": {
-		value: "ascendant"
-	},
-
-	"DESCENDANT": {
-		value: "descendant"
-	},
-
-	"DATE": {
-		value: "date"
-	},
-
-	"NAME": {
-		value: "name"
-	},
-
-	"COLOR": {
-		value: "color"
-	}
-});
-
-// héritage
-ModelParameters.prototype = Object.create(BasicModelObject.prototype);

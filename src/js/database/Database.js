@@ -56,7 +56,7 @@ Object.defineProperties(Database, {
 	 * @param upgradeneeded the callback function to call in case of upgrade needed
 	 */
 	"open": {
-		value: function (name, success, error, upgradeneeded)
+		value: function (name, version, success, error, upgradeneeded)
 		{
 			if (typeof Database.db[name] !== "undefined")
 				throw new Error(name + " is already opened.");
@@ -74,10 +74,10 @@ Object.defineProperties(Database, {
 				Database.db[name] = event.target.result;
 				Database.db[name].addEventListener("error", error);
 				if (typeof success !== "undefined")
-					upgradeneeded(); // we call this here, otherwise we're not sure the DB is set when we call it
+					upgradeneeded(event); // we call this here, otherwise we're not sure the DB is set when we call it
 			};
 
-			var request = indexedDB.open(name);
+			var request = indexedDB.open(name, version);
 			request.addEventListener("success", onOpen);
 			// request.addEventListener("success", success);
 			request.addEventListener("upgradeneeded", onUpgrade);
