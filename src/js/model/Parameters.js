@@ -27,12 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 function Parameters ()
 {
 	Object.defineProperties(this, {
-		/** the ID in the database */
+		/** the ID in the database. as there is only one Parameters in the base, it is always 1 */
 		"id": {
 			value: 1,
 			enumerable: true
 		},
-		
+
 		/** the criterion we use to sort the lists in the main screen */
 		"sortType": {
 			value: Parameters.NAME,
@@ -68,6 +68,8 @@ function Parameters ()
 			writable: true
 		}
 	});
+
+	this.type = Parameters.TYPE;
 }
 
 Object.defineProperties(Parameters, {
@@ -105,4 +107,4 @@ Object.defineProperties(Parameters, {
 });
 
 // héritage
-//Parameters.prototype = Object.create(BasicModelObject.prototype);
+Parameters.prototype = new ModelObject();

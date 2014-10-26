@@ -69,4 +69,11 @@ function Color ()
 			}
 		}
 	});
+	
+	this.type = Color.TYPE;
 }
+
+Object.defineProperty(Color, "TYPE", { value: "color" });
+
+//héritage
+Color.prototype = new ModelObject();

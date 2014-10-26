@@ -51,7 +51,7 @@ Object.defineProperties(Database, {
 	 * open the database. it opens the database, and adds to it the listeners.
 	 * 
 	 * @param name the name of the database
-	 * @param success the callback function to call in case of success
+	 * @param success the callback function to call in case of success. success(db) in parameter the DB newly created
 	 * @param error the callback function to call in case of error (this callback is permanently added to the database)
 	 * @param upgradeneeded the callback function to call in case of upgrade needed
 	 */
@@ -66,7 +66,7 @@ Object.defineProperties(Database, {
 				Database.db[name] = event.target.result;
 				Database.db[name].addEventListener("error", error);
 				if (typeof success !== "undefined")
-					success(); // we call this here, otherwise we're not sure the DB is set when we call it
+					success(Database.db[name]); // we call this here, otherwise we're not sure the DB is set when we call it
 			};
 
 			var onUpgrade = function (event)

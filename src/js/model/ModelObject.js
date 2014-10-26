@@ -27,48 +27,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 function ModelObject ()
 {
 	Object.defineProperties(this, {
+		// id not defined: it is defined if it comes from the DB, otherwise it is undefined
 		/** the type (ModelObject.LIST or ModelObject.TEXT) */
 		"type": {
+			value: ModelObject.TYPE,
 			enumerable: true,
 			writable: true
-		},
-
-		/** the title (name) of the object */
-		"title": {
-			value: "",
-			enumerable: true,
-			writable: true
-		},
-
-		/** the description of the object */
-		"color": {
-			value: new Color(),
-			enumerable: true,
-			writable: true
-		},
-
-		/** the content of the object */
-		"content": {
-			value: "",
-			enumerable: true,
-			writable: true
-		},
-
-		/** the date of creation */
-		"date": {
-			value: new Date().getTime(),
-			enumerable: true
 		},
 
 		/** export the object in a string */
 		"toString": {
-			value: function ()
-			{
-			},
 			writable: true
 		}
 	});
 }
 
-// héritage
-ModelObject.prototype = Object.create(BasicModelObject.prototype);
+Object.defineProperty(ModelObject, "TYPE", { value: "modelobject" });
+

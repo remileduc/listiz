@@ -57,8 +57,8 @@ function DAOParameters (database)
 			}
 		},
 		
-		"delete": {
-			value: function (onSuccess)
+		"del": {
+			value: function (parameters, onSuccess)
 			{
 				this.clear(onSuccess);
 			}
