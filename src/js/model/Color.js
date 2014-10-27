@@ -72,8 +72,8 @@ function Color ()
 	
 	this.type = Color.TYPE;
 }
+//héritage
+Color.prototype = new ModelObject();
 
 Object.defineProperty(Color, "TYPE", { value: "color" });
 
-//héritage
-Color.prototype = new ModelObject();

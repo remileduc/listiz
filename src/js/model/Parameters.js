@@ -71,6 +71,8 @@ function Parameters ()
 
 	this.type = Parameters.TYPE;
 }
+// héritage
+Parameters.prototype = new ModelObject();
 
 Object.defineProperties(Parameters, {
 	"DBNAME": {
@@ -106,5 +108,3 @@ Object.defineProperties(Parameters, {
 	}
 });
 
-// héritage
-Parameters.prototype = new ModelObject();

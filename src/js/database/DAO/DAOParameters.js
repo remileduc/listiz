@@ -27,51 +27,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 function DAOParameters (database)
 {
-	var db = database;
-	
 	Object.defineProperties(this, {
+		"db": {
+			value: database
+		},
+	
 		"put": {
-			/**
-			 * insert the given parameters int the database.
-			 * @param parameters the parameters to insert
-			 * @param on success the function to call in case of success. success(id) will be called with the id in the DB of the inserted parameters
-			 */
-			value: function (parameters, onSuccess)
-			{
-				db.transaction([DAOParameters.NAME], "readwrite").objectStore(DAOParameters.NAME).put(DAOParameters.ModelToDao(parameters)).onsuccess = function (event) {
-					onSuccess(event.target.result);
-				};
-			}
+			value: function (parameters, onSuccess) { DAOParameters.prototype.put.call(this, parameters, onSuccess); }
 		},
 		
 		"get": {
-			/**
-			 * return the current saved parameters (there can only be one parameter object in the DB)
-			 * @param onSuccess (parameters) the function to call in case of success
-			 */
-			value: function (onSuccess)
-			{
-				db.transaction([DAOParameters.NAME]).objectStore(DAOParameters.NAME).get(1).onsuccess = function (event) {
-					onSuccess(DAOParameters.DaoToModel(event.target.result));
-				};
-			}
+			value: function (onSuccess) { DAOParameters.prototype.get.call(this, 1, onSuccess); }
+		},
+		
+		"getAll": {
+			value: function (onSuccess) { DAOParameters.prototype.getAll.call(this, onSuccess); }
 		},
 		
 		"del": {
-			value: function (parameters, onSuccess)
-			{
-				this.clear(onSuccess);
-			}
+			value: function (parameters, onSuccess) { this.clear(onSuccess); }
 		},
 		
 		"clear": {
-			value: function (onSuccess)
-			{
-				db.transaction([DAOParameters.NAME], "readwrite").objectStore(DAOParameters.NAME).clear().onsuccess = onSuccess;
-			}
+			value: function (onSuccess) { DAOParameters.prototype.clear.call(this, onSuccess); }
 		}
 	});
 }
+//héritage
+DAOParameters.prototype = new DAO();
 
 Object.defineProperties(DAOParameters, {
 	"NAME": {
@@ -85,6 +68,12 @@ Object.defineProperties(DAOParameters, {
 			var db = event.target.result;
 			db.createObjectStore(DAOParameters.NAME, { keyPath: "id", autoIncrement: true });
 		}
+	}
+});
+
+Object.defineProperties(DAOParameters.prototype, {
+	"NAME": {
+		value: DAOParameters.NAME
 	},
 	
 	"DaoToModel": {
