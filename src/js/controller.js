@@ -60,7 +60,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 	function onDAORetrieveSuccess(par)
 	{
 		parameters = par;
-		if (parameters != null)
+		if (parameters !== null)
 		{
 			console.log("Retreived!");
 			console.log(parameters);

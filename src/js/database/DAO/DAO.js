@@ -57,7 +57,7 @@ Object.defineProperties(DAO.prototype, {
 		/**
 		 * return the current saved model object with the given ID
 		 * @param id the id of the object to retrieve
-		 * @param onSuccess(modelObject) the function to call in case of success
+		 * @param onSuccess (modelObject) the function to call in case of success
 		 */
 		value: function (id, onSuccess)
 		{

@@ -79,7 +79,7 @@ Object.defineProperties(DAOList.prototype, {
 	"DaoToModel": {
 		value: function(dao)
 		{
-			var members = undefined, list = null, i;
+			var members, list = null, i;
 			
 			if (typeof dao === "undefined")
 				return null;
@@ -111,7 +111,7 @@ Object.defineProperties(DAOList.prototype, {
 		value: function (model)
 		{
 			var copy = { contents: "" };
-			var members = undefined, toJSON = [];
+			var members, toJSON = [];
 			
 			for (members in model)
 			{
@@ -123,7 +123,10 @@ Object.defineProperties(DAOList.prototype, {
 				}
 			}
 			for (members in model.color)
-				toJSON.push(members);
+			{
+				if (typeof members !== "undefined")
+					toJSON.push(members);
+			}
 			copy.contents = JSON.stringify(model.contents, toJSON, "\t");
 			
 			return copy;

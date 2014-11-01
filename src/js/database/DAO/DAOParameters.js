@@ -79,7 +79,7 @@ Object.defineProperties(DAOParameters.prototype, {
 	"DaoToModel": {
 		value: function(dao)
 		{
-			var members = undefined, parameters = null;
+			var members, parameters = null;
 			
 			if (typeof dao === "undefined")
 				return null;

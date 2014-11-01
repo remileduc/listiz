@@ -66,9 +66,9 @@ function List ()
 			{
 				var i = 0;
 				
-				while (i < contents.length && contents[i] !== element)
+				while (i < this.contents.length && this.contents[i] !== element)
 					i++;
-				if (i < contents.length)
+				if (i < this.contents.length)
 					this.rmSubElIndex(i);
 			}
 		},
@@ -97,7 +97,7 @@ function List ()
 		"mvSubEl": {
 			value: function (oldindex, newindex)
 			{
-				this.contents.splice(oldindex < newindex ? newindex - 1 : newindex, 0, this.contents.splice(oldindex, 1)[0]);
+				this.contents.splice(newindex, 0, this.contents.splice(oldindex, 1)[0]);
 			}
 		},
 		

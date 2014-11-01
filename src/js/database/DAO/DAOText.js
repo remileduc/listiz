@@ -80,7 +80,7 @@ Object.defineProperties(DAOText.prototype, {
 	"DaoToModel": {
 		value: function(dao)
 		{
-			var members = undefined, text = null;
+			var members, text = null;
 			
 			if (typeof dao === "undefined")
 				return null;

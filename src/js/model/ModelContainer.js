@@ -36,7 +36,6 @@ function ModelContainer ()
 
 		/** the color of the object */
 		"color": {
-			value: new Color(),
 			enumerable: true,
 			writable: true
 		},
