@@ -111,6 +111,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 	function onUpgradeNeeded (event)
 	{
 		DAOParameters.DBUpgradeNeeded(event);
+		DAOList.DBUpgradeNeeded(event);
+		DAOMainList.DBUpgradeNeeded(event);
+		DAOText.DBUpgradeNeeded(event);
 	}
 })();
 

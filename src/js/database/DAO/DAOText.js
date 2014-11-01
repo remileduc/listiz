@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
  * class DAO for parameters
  * @param database the database
  */
-function DAOParameters (database)
+function DAOText (database)
 {
 	Object.defineProperties(this, {
 		"db": {
@@ -33,64 +33,65 @@ function DAOParameters (database)
 		},
 	
 		"put": {
-			value: function (parameters, onSuccess) { DAOParameters.prototype.put.call(this, parameters, onSuccess); }
+			value: function (text, onSuccess) { DAOText.prototype.put.call(this, text, onSuccess); }
 		},
 		
 		"get": {
-			value: function (onSuccess) { DAOParameters.prototype.get.call(this, 1, onSuccess); }
+			value: function (id, onSuccess) { DAOText.prototype.get.call(this, id, onSuccess); }
 		},
 		
 		"getAll": {
-			value: function (onSuccess) { DAOParameters.prototype.getAll.call(this, onSuccess); }
+			value: function (onSuccess) { DAOText.prototype.getAll.call(this, onSuccess); }
 		},
 		
 		"del": {
-			value: function (parameters, onSuccess) { this.clear(onSuccess); }
+			value: function (text, onSuccess) { DAOText.prototype.del.call(this, text, onSuccess); }
 		},
 		
 		"clear": {
-			value: function (onSuccess) { DAOParameters.prototype.clear.call(this, onSuccess); }
+			value: function (onSuccess) { DAOText.prototype.clear.call(this, onSuccess); }
 		}
 	});
 }
 //héritage
-DAOParameters.prototype = new DAO();
+DAOText.prototype = new DAO();
 
-Object.defineProperties(DAOParameters, {
+Object.defineProperties(DAOText, {
 	"NAME": {
-		value: "parameters",
+		value: "lists",
 		enumerable: true
 	},
 	
 	"DBUpgradeNeeded": {
 		value: function (event)
 		{
-			var db = event.target.result;
-			db.createObjectStore(DAOParameters.NAME, { keyPath: "id", autoIncrement: true });
+			// the object store is already created by List.DBUpgradeNeeded()
+			/*var db = event.target.result;
+			db.createObjectStore(DAOText.NAME, { keyPath: "id", autoIncrement: true });*/
 		}
 	}
 });
 
-Object.defineProperties(DAOParameters.prototype, {
+Object.defineProperties(DAOText.prototype, {
 	"NAME": {
-		value: DAOParameters.NAME
+		value: DAOText.NAME
 	},
 	
 	"DaoToModel": {
 		value: function(dao)
 		{
-			var members = undefined, parameters = null;
+			var members = undefined, text = null;
 			
 			if (typeof dao === "undefined")
 				return null;
 
-			parameters = new Parameters();
+			text = new Text();
 			for (members in dao)
 			{
-				if (typeof members !== "undefined" && members !== "id")
-					parameters[members] = dao[members];
+				if (typeof members !== "undefined")
+					text[members] = dao[members];
 			}
-			return parameters;
+			return text;
 		}
 	},
 	

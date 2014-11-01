@@ -40,15 +40,15 @@ function Color ()
 			writable: true
 		},
 
-		/** the blue component */
-		"blue": {
+		/** the green component */
+		"green": {
 			value: 0,
 			enumerable: true,
 			writable: true
 		},
 
-		/** the green component */
-		"green": {
+		/** the blue component */
+		"blue": {
 			value: 0,
 			enumerable: true,
 			writable: true
@@ -66,6 +66,24 @@ function Color ()
 			value: function ()
 			{
 				return "rgba(" + this.red + "," + this.blue + "," + this.green + "," + this.alpha + ")";
+			}
+		},
+		
+		/** return - 1 if this color should be sorted before than the one in parameter in a sort */
+		"sortBefore": {
+			value: function (b)
+			{
+				if (this.red < b.red)
+					return -1;
+				if (this.green < b.green)
+					return -1;
+				if (this.blue < b.blue)
+					return -1;
+				if (this.alpha < b.alpha)
+					return -1;
+				if (this.alpha === b.alpha)
+					return 0;
+				return 1;
 			}
 		}
 	});

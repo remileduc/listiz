@@ -68,7 +68,7 @@ function Parameters ()
 			writable: true
 		}
 	});
-
+	
 	this.type = Parameters.TYPE;
 }
 // héritage
@@ -99,8 +99,8 @@ Object.defineProperties(Parameters, {
 		value: "date"
 	},
 
-	"NAME": {
-		value: "name"
+	"TITLE": {
+		value: "title"
 	},
 
 	"COLOR": {
