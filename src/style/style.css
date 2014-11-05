@@ -55,6 +55,22 @@ footer
 	opacity: 0;
 }
 
+/*********** LISTS ***********/
+*[data-expand="false"] > ul
+{
+	display: none;
+}
+
+.expandable[data-expand="false"] .textlist:after
+{
+	content: "|+";
+}
+
+.expandable[data-expand="true"] .textlist:after
+{
+	content: "|-";
+}
+
 /*********** MEDIA QUERIES ***********/
 @media (orientation: landscape)
 {

@@ -37,86 +37,6 @@ function List ()
 			value: null,
 			enumerable: true,
 			writable: true
-		},
-		
-		/**
-		 * add a subElement
-		 * @param element the sub element to add (of type List)
-		 * @param position the position in the sub elements (can be at the end or in the middle...) by default at the end
-		 */
-		"addSubEl": {
-			value: function (element, position)
-			{
-				if (typeof position === "undefined")
-					this.contents.push(element);
-				else if (position === 0)
-					this.contents.unshift(element);
-				else
-					this.contents.splice(position, 0, element);
-				element.parent = this;
-			}
-		},
-		
-		/**
-		 * remove a subElement
-		 * @param element the sub element to remove (of type List)
-		 */
-		"rmSubEl": {
-			value: function (element)
-			{
-				var i = 0;
-				
-				while (i < this.contents.length && this.contents[i] !== element)
-					i++;
-				if (i < this.contents.length)
-					this.rmSubElIndex(i);
-			}
-		},
-		
-		/**
-		 * remove a subElement
-		 * @param index the index of the element to remove
-		 */
-		"rmSubElIndex": {
-			value: function (index)
-			{
-				if (index === 0)
-					this.contents.shift();
-				else if (index === this.contents.length - 1)
-					this.contents.pop();
-				else if (index > 0 && index < this.contents.length)
-					this.contents.splice(index, 1);
-			}
-		},
-		
-		/**
-		 * move a sub element
-		 * @param oldindex the index of the element to move
-		 * @param newindex its new index after move
-		 */
-		"mvSubEl": {
-			value: function (oldindex, newindex)
-			{
-				this.contents.splice(newindex, 0, this.contents.splice(oldindex, 1)[0]);
-			}
-		},
-		
-		"toString": {
-			value: function (depth)
-			{
-				var str = this.title + "\n";
-				
-				if (typeof depth === "undefined")
-					depth = 0;
-				depth++;
-				for (var i = 0; i < this.contents.length; i++)
-				{
-					for (var j = 0; j < depth; j++)
-						str += "\t";
-					str += this.contents[i].toString(depth);
-				}
-				return str;
-			}
 		}
 	});
 	
@@ -126,6 +46,88 @@ function List ()
 }
 //héritage
 List.prototype = new ModelContainer();
+
+Object.defineProperties(List.prototype, {
+	/**
+	 * add a subElement
+	 * @param element the sub element to add (of type List)
+	 * @param position the position in the sub elements (can be at the end or in the middle...) by default at the end
+	 */
+	"addSubEl": {
+		value: function (element, position)
+		{
+			if (typeof position === "undefined")
+				this.contents.push(element);
+			else if (position === 0)
+				this.contents.unshift(element);
+			else
+				this.contents.splice(position, 0, element);
+			element.parent = this;
+		}
+	},
+	
+	/**
+	 * remove a subElement
+	 * @param element the sub element to remove (of type List)
+	 */
+	"rmSubEl": {
+		value: function (element)
+		{
+			var i = 0;
+			
+			while (i < this.contents.length && this.contents[i] !== element)
+				i++;
+			if (i < this.contents.length)
+				this.rmSubElIndex(i);
+		}
+	},
+	
+	/**
+	 * remove a subElement
+	 * @param index the index of the element to remove
+	 */
+	"rmSubElIndex": {
+		value: function (index)
+		{
+			if (index === 0)
+				this.contents.shift();
+			else if (index === this.contents.length - 1)
+				this.contents.pop();
+			else if (index > 0 && index < this.contents.length)
+				this.contents.splice(index, 1);
+		}
+	},
+	
+	/**
+	 * move a sub element
+	 * @param oldindex the index of the element to move
+	 * @param newindex its new index after move
+	 */
+	"mvSubEl": {
+		value: function (oldindex, newindex)
+		{
+			this.contents.splice(newindex, 0, this.contents.splice(oldindex, 1)[0]);
+		}
+	},
+	
+	"toString": {
+		value: function (depth)
+		{
+			var str = this.title + "\n";
+			
+			if (typeof depth === "undefined")
+				depth = 0;
+			depth++;
+			for (var i = 0; i < this.contents.length; i++)
+			{
+				for (var j = 0; j < depth; j++)
+					str += "\t";
+				str += this.contents[i].toString(depth);
+			}
+			return str;
+		}
+	}
+});
 
 Object.defineProperty(List, "TYPE", { value: "list" });
 

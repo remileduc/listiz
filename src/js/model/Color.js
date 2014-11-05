@@ -59,32 +59,6 @@ function Color ()
 			value: 1,
 			enumerable: true,
 			writable: true
-		},
-		
-		/** return a string representing the color: "rgba(r,g,b,a)" */
-		"toStringRGBA": {
-			value: function ()
-			{
-				return "rgba(" + this.red + "," + this.blue + "," + this.green + "," + this.alpha + ")";
-			}
-		},
-		
-		/** return - 1 if this color should be sorted before than the one in parameter in a sort */
-		"sortBefore": {
-			value: function (b)
-			{
-				if (this.red < b.red)
-					return -1;
-				if (this.green < b.green)
-					return -1;
-				if (this.blue < b.blue)
-					return -1;
-				if (this.alpha < b.alpha)
-					return -1;
-				if (this.alpha === b.alpha)
-					return 0;
-				return 1;
-			}
 		}
 	});
 	
@@ -94,4 +68,32 @@ function Color ()
 Color.prototype = new ModelObject();
 
 Object.defineProperty(Color, "TYPE", { value: "color" });
+
+Object.defineProperties(this, {
+	/** return a string representing the color: "rgba(r,g,b,a)" */
+	"toStringRGBA": {
+		value: function ()
+		{
+			return "rgba(" + this.red + "," + this.blue + "," + this.green + "," + this.alpha + ")";
+		}
+	},
+	
+	/** return - 1 if this color should be sorted before than the one in parameter in a sort */
+	"sortBefore": {
+		value: function (b)
+		{
+			if (this.red < b.red)
+				return -1;
+			if (this.green < b.green)
+				return -1;
+			if (this.blue < b.blue)
+				return -1;
+			if (this.alpha < b.alpha)
+				return -1;
+			if (this.alpha === b.alpha)
+				return 0;
+			return 1;
+		}
+	}
+});
 
