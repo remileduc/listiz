@@ -106,6 +106,7 @@ Object.defineProperties(ListView.prototype, {
 			element.htmlRm = document.createElement("button");
 			element.htmlRm.classList.add("rmbtn");
 			element.htmlRm.textContent = "×";
+			element.htmlRm.addEventListener("click", this.onDelete.bind(element));
 			
 			element.htmlContents = document.createElement("li");
 			element.htmlContents.appendChild(element.htmlMove);
@@ -159,8 +160,10 @@ Object.defineProperties(ListView.prototype, {
 	"prependSubEl": {
 		value: function (element)
 		{
-			this.contents.push(element);
+			this.subs.unshift(element);
+			this.model.addSubEl(element.model, 0);
 			element.parent = this;
+			this.htmlContents.insertBefore(element.htmlContents, this.htmlContents.firstChild);
 		}
 	},
 	
@@ -171,8 +174,10 @@ Object.defineProperties(ListView.prototype, {
 	"appendSubEl": {
 		value: function (element)
 		{
-			this.contents.push(element);
+			this.subs.push(element);
+			this.model.addSubEl(element);
 			element.parent = this;
+			this.htmlContents.appendChild(element.htmlContents);
 		}
 	},
 	
@@ -185,9 +190,9 @@ Object.defineProperties(ListView.prototype, {
 		{
 			var i = 0;
 			
-			while (i < this.contents.length && this.contents[i] !== element)
+			while (i < this.subs.length && this.subs[i] !== element)
 				i++;
-			if (i < this.contents.length)
+			if (i < this.subs.length)
 				this.rmSubElIndex(i);
 		}
 	},
@@ -199,12 +204,15 @@ Object.defineProperties(ListView.prototype, {
 	"rmSubElIndex": {
 		value: function (index)
 		{
+			this.htmlUl.removeChild(this.subs[index].htmlContents);
+			this.model.rmSubElIndex(index);
+
 			if (index === 0)
-				this.contents.shift();
-			else if (index === this.contents.length - 1)
-				this.contents.pop();
-			else if (index > 0 && index < this.contents.length)
-				this.contents.splice(index, 1);
+				this.subs.shift();
+			else if (index === this.subs.length - 1)
+				this.subs.pop();
+			else if (index > 0 && index < this.subs.length)
+				this.subs.splice(index, 1);
 		}
 	},
 	
@@ -216,7 +224,13 @@ Object.defineProperties(ListView.prototype, {
 	"mvSubEl": {
 		value: function (oldindex, newindex)
 		{
-			this.contents.splice(newindex, 0, this.contents.splice(oldindex, 1)[0]);
+			this.htmlContents.removeChild(this.subs[oldindex].htmlContents);
+			this.subs.splice(newindex, 0, this.subs.splice(oldindex, 1)[0]);
+			this.model.mvSubEl(oldindex, newindex);
+			if (newindex >= this.subs.length - 1)
+				this.htmlContents.appendChild(this.subs[newindex].htmlContents);
+			else
+				this.htmlContents.insertBefore(this.subs[newindex].htmlContents, this.subs[newindex + 1].htmlContents);
 		}
 	},
 	
@@ -231,7 +245,7 @@ Object.defineProperties(ListView.prototype, {
 		{
 			e.preventDefault();
 			
-			this.parentElement.dataset.expand = this.parentElement.dataset.expand === "true" ? "false" : "true";
+			this.parent.rmSubEl(this);
 		}
 	}
 });
