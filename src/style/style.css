@@ -61,6 +61,11 @@ footer
 	display: none;
 }
 
+.notexpandable .textlist:after
+{
+	content: "" !important;
+}
+
 .expandable[data-expand="false"] .textlist:after
 {
 	content: "|+";

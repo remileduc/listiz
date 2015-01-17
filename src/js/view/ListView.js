@@ -76,48 +76,50 @@ function ListView ()
 		}
 	});
 }
-
+//héritage
 ListView.prototype = new ViewObject();
 
 Object.defineProperties(ListView.prototype, {
 	/**
-	 * create an element with all the html elements and the callback functions
+	 * set up an element with all the html elements and the callback functions
 	 * @param element the element to setup
 	 * @param modelObject the model object associated
 	 */
 	"setup": {
-		value: function (element, modelObject)
+		value: function (modelObject)
 		{
-			element.model = modelObject;
+			this.model = modelObject;
 			
-			element.htmlMove = document.createElement("button");
-			element.htmlMove.classList.add("movebtn");
-			element.htmlMove.textContent = "↕";
+			this.htmlMove = document.createElement("button");
+			this.htmlMove.classList.add("movebtn");
+			this.htmlMove.textContent = "↕";
 			
-			element.htmlText = document.createElement("span");
-			element.htmlText.textContent = element.model.title;
-			element.htmlText.classList.add("textlist");
-			element.htmlText.addEventListener("click", this.onExpand);
+			this.htmlText = document.createElement("span");
+			this.htmlText.textContent = this.model.title;
+			this.htmlText.classList.add("textlist");
+			this.htmlText.addEventListener("click", this.onExpand.bind(this));
 			
-			element.htmlAdd = document.createElement("button");
-			element.htmlAdd.classList.add("addbtn");
-			element.htmlAdd.textContent = "+";
+			this.htmlAdd = document.createElement("button");
+			this.htmlAdd.classList.add("addbtn");
+			this.htmlAdd.textContent = "+";
 			
-			element.htmlRm = document.createElement("button");
-			element.htmlRm.classList.add("rmbtn");
-			element.htmlRm.textContent = "×";
-			element.htmlRm.addEventListener("click", this.onDelete.bind(element));
-			
-			element.htmlContents = document.createElement("li");
-			element.htmlContents.appendChild(element.htmlMove);
-			element.htmlContents.appendChild(element.htmlText);
-			element.htmlContents.appendChild(element.htmlAdd);
-			element.htmlContents.appendChild(element.htmlRm);
-			
-			if (element.model.contents.length !== 0)
+			this.htmlRm = document.createElement("button");
+			this.htmlRm.classList.add("rmbtn");
+			this.htmlRm.textContent = "×";
+			this.htmlRm.addEventListener("click", this.onDelete.bind(this));
+
+			this.htmlUl = document.createElement("ul");
+			if (modelObject.parent === null) // the head of the list
+				this.htmlContents = this.htmlUl;
+			else
 			{
-				element.htmlContents.classList.add("expandable");
-				element.htmlContents.dataset.expand = "false";
+				this.htmlContents = document.createElement("li");
+				this.htmlContents.appendChild(this.htmlMove);
+				this.htmlContents.appendChild(this.htmlText);
+				this.htmlContents.appendChild(this.htmlAdd);
+				this.htmlContents.appendChild(this.htmlRm);
+				this.htmlContents.appendChild(this.htmlUl);
+				this.setExpandable(this.model.contents.length !== 0);
 			}
 		}
 	},
@@ -128,27 +130,15 @@ Object.defineProperties(ListView.prototype, {
 		{
 			var i, l;
 			
-			if (modelObject.parent === null) // the head of the list
-				this.model = modelObject;
-			else
-				this.setup(this, modelObject);
-			
-			if (this.model.contents.length !== 0)
+			this.setup(modelObject);
+			for (i = 0; i < this.model.contents.length; i++)
 			{
-				this.htmlUl = document.createElement("ul");
-				if (typeof this.htmlContents === "undefined") // head of the list
-					this.htmlContents = this.htmlUl;
-				else
-					this.htmlContents.appendChild(this.htmlUl);
-				for (i = 0; i < this.model.contents.length; i++)
-				{
-					l = new ListView();
-					l.init(this.model.contents[i]);
-					l.parent = this;
+				l = new ListView();
+				l.init(this.model.contents[i]);
+				l.parent = this;
 
-					this.subs.push(l);
-					this.htmlUl.appendChild(l.htmlContents);
-				}
+				this.subs.push(l);
+				this.htmlUl.appendChild(l.htmlContents);
 			}
 		}
 	},
@@ -160,6 +150,8 @@ Object.defineProperties(ListView.prototype, {
 	"prependSubEl": {
 		value: function (element)
 		{
+			if (this.subs.length === 0)
+				this.setExpandable(true);
 			this.subs.unshift(element);
 			this.model.addSubEl(element.model, 0);
 			element.parent = this;
@@ -174,6 +166,8 @@ Object.defineProperties(ListView.prototype, {
 	"appendSubEl": {
 		value: function (element)
 		{
+			if (this.subs.length === 0)
+				this.setExpandable(true);
 			this.subs.push(element);
 			this.model.addSubEl(element);
 			element.parent = this;
@@ -213,6 +207,8 @@ Object.defineProperties(ListView.prototype, {
 				this.subs.pop();
 			else if (index > 0 && index < this.subs.length)
 				this.subs.splice(index, 1);
+			if (this.subs.length === 0)
+				this.setExpandable(false);
 		}
 	},
 	
@@ -233,10 +229,15 @@ Object.defineProperties(ListView.prototype, {
 				this.htmlContents.insertBefore(this.subs[newindex].htmlContents, this.subs[newindex + 1].htmlContents);
 		}
 	},
-	
+
+	// **************************** CALLBACKS ****************************
 	/** expand or not a list item */
 	"onExpand": {
-		value: function () { this.parentElement.dataset.expand = this.parentElement.dataset.expand === "true" ? "false" : "true"; }
+		value: function ()
+		{
+			if (this.subs.length > 0)
+				this.htmlContents.dataset.expand = this.htmlContents.dataset.expand === "true" ? "false" : "true";
+		}
 	},
 	
 	/** delete an item */
@@ -246,6 +247,29 @@ Object.defineProperties(ListView.prototype, {
 			e.preventDefault();
 			
 			this.parent.rmSubEl(this);
+		}
+	},
+	
+	// **************************** PRIVATE ****************************
+	/**
+	 * set the item as expandable
+	 * @param isExpandable if true, the item is expandable
+	 */
+	"setExpandable": {
+		value: function (isExpandable)
+		{
+			if (isExpandable)
+			{
+				this.htmlContents.classList.remove("notexpandable");
+				this.htmlContents.classList.add("expandable");
+				this.htmlContents.dataset.expand = "false";
+			}
+			else
+			{
+				this.htmlContents.classList.remove("expandable");
+				this.htmlContents.classList.add("notexpandable");
+				delete this.htmlContents.dataset.expand;
+			}
 		}
 	}
 });

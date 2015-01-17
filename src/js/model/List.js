@@ -26,11 +26,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 function List ()
 {
+	var _done = false;
 	Object.defineProperties(this, {
+		/**
+		 * tells if the item is done or not
+		 * @param isDone if true, the item is done, and all its children are done. If all its brothers are done too, its parent is set to done.
+		 * If false, the item is not done, and its parent is not done too
+		 */
 		"done": {
-			value: false,
 			enumerable: true,
-			writable: true
+			get: function () { return _done; },
+			set: function (isDone)
+			{
+				var i, size;
+				
+				_done = isDone;
+				
+				if (!_done && this.parent !== null && this.parent.done) // if !done, parent is not done too
+					this.parent.done = false;
+				else if (_done && this.parent !== null && !this.parent.done) // if done
+				{
+					for (i = 0, size = this.contents.length; i < size; i++) // children are done too
+						this.contents[i].done = _done;
+					for (i = 0, size = this.parent.contents.length; i < size; i++) // if brothers are done, parent is done too
+					{
+						if (!this.parent.contents[i].done)
+							return;
+					}
+					this.parent.done = _done;
+				}
+			}
 		},
 
 		"parent": {
@@ -63,6 +88,7 @@ Object.defineProperties(List.prototype, {
 			else
 				this.contents.splice(position, 0, element);
 			element.parent = this;
+			element.done = element.done; // sets the parent / children done member
 		}
 	},
 	
@@ -89,12 +115,21 @@ Object.defineProperties(List.prototype, {
 	"rmSubElIndex": {
 		value: function (index)
 		{
+			var delel = this.contents[index];
+			var i, size;
 			if (index === 0)
 				this.contents.shift();
 			else if (index === this.contents.length - 1)
 				this.contents.pop();
-			else if (index > 0 && index < this.contents.length)
+			else
 				this.contents.splice(index, 1);
+			delel.parent = null;
+			for (i = 0, size = this.contents.length; i < size; i++) // if brothers are done, parent is done too
+			{
+				if (!this.contents[i].done)
+					return;
+			}
+			this.parent.done = true;
 		}
 	},
 	
