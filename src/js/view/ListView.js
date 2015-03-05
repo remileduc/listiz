@@ -53,6 +53,7 @@ function ListView ()
 
 		/** the list that contains the sub elements */
 		"htmlUl": {
+			value: document.createElement("ul"),
 			enumerable: true,
 			writable: true
 		},
@@ -73,111 +74,132 @@ function ListView ()
 		
 		"show": {
 			value: function () { ListView.prototype.show.call(this); }
+		},
+
+		// **************************** CALLBACKS ****************************
+		/** expand or not a list item */
+		"onExpand": {
+			value: (function ()
+			{
+				if (this.subs.length > 0)
+				{
+					this.htmlContents.dataset.expand = this.htmlContents.dataset.expand === "true" ? "false" : "true";
+					this.htmlAdd.textContent = this.htmlContents.dataset.expand === "true" ? "-" : "+";
+				}
+			}).bind(this)
+		},
+		
+		/** add a new subitem at the end */
+		"onAppend": {
+			value: (function ()
+			{
+				var element = new ListView();
+				element.init(new List());
+				this.appendSubEl(element);
+			}).bind(this)
+		},
+		
+		/** add a new subitem at the beginning */
+		"onPrepend": {
+			value: (function ()
+			{
+				var element = new ListView();
+				element.init(new List());
+				this.appendSubEl(element);
+			}).bind(this)
+		},
+		
+		/** delete an item */
+		"onDelete": {
+			value: (function ()
+			{
+				this.parent.rmSubEl(this);
+			}).bind(this)
+		},
+		
+		/** call when an item must be set to done */
+		"onDone": {
+			value: (function (e)
+			{
+				this.setDone(e.type === "done" ? this.model.done : !this.model.done);
+			}).bind(this)
 		}
 	});
+	
+	this.htmlContents = this.htmlUl;
 }
 //héritage
 ListView.prototype = new ViewObject();
 
 Object.defineProperties(ListView.prototype, {
-	/**
-	 * set up an element with all the html elements and the callback functions
-	 * @param element the element to setup
-	 * @param modelObject the model object associated
-	 */
-	"setup": {
-		value: function (modelObject)
-		{
-			this.model = modelObject;
-			
-			this.htmlMove = document.createElement("button");
-			this.htmlMove.classList.add("movebtn");
-			this.htmlMove.textContent = "↕";
-			
-			this.htmlText = document.createElement("span");
-			this.htmlText.textContent = this.model.title;
-			this.htmlText.classList.add("textlist");
-			this.htmlText.addEventListener("click", this.onExpand.bind(this));
-			
-			this.htmlAdd = document.createElement("button");
-			this.htmlAdd.classList.add("addbtn");
-			this.htmlAdd.textContent = "+";
-			
-			this.htmlRm = document.createElement("button");
-			this.htmlRm.classList.add("rmbtn");
-			this.htmlRm.textContent = "×";
-			this.htmlRm.addEventListener("click", this.onDelete.bind(this));
-
-			this.htmlUl = document.createElement("ul");
-			if (modelObject.parent === null) // the head of the list
-				this.htmlContents = this.htmlUl;
-			else
-			{
-				this.htmlContents = document.createElement("li");
-				this.htmlContents.appendChild(this.htmlMove);
-				this.htmlContents.appendChild(this.htmlText);
-				this.htmlContents.appendChild(this.htmlAdd);
-				this.htmlContents.appendChild(this.htmlRm);
-				this.htmlContents.appendChild(this.htmlUl);
-				this.setExpandable(this.model.contents.length !== 0);
-			}
-		}
-	},
-	
+	// **************************** ACCESSORS ****************************
 	/** function that initializes the object with the model */
 	"init": {
 		value: function (modelObject)
 		{
 			var i, l;
 			
-			this.setup(modelObject);
+			this.model = modelObject;
+			this.model.addEventListener("done", this.onDone);
+			this.htmlContents = this.htmlUl;
 			for (i = 0; i < this.model.contents.length; i++)
 			{
 				l = new ListView();
 				l.init(this.model.contents[i]);
-				l.parent = this;
-
-				this.subs.push(l);
-				this.htmlUl.appendChild(l.htmlContents);
+				this.appendSubEl(l);
 			}
 		}
 	},
+
+	/**
+	 * sets the item to done
+	 * @param done if true the item is done.
+	 */
+	"setDone": {
+		value: function (done)
+		{
+			this.htmlContents.dataset.done = done;
+			if (this.model.done !== done)
+				this.model.done = done;
+		}
+	},
 	
+	// **************************** MANAGE FUNCTIONS ****************************
 	/**
 	 * prepend a subElement
-	 * @param element the sub element to add (of type List)
+	 * @param element the sub element to add (of type ListView)
 	 */
 	"prependSubEl": {
 		value: function (element)
 		{
-			if (this.subs.length === 0)
-				this.setExpandable(true);
+			element.prepareSubEl();
 			this.subs.unshift(element);
 			this.model.addSubEl(element.model, 0);
 			element.parent = this;
-			this.htmlContents.insertBefore(element.htmlContents, this.htmlContents.firstChild);
+			this.htmlUl.insertBefore(element.htmlContents, this.htmlContents.firstChild);
+			this.setExpandable(true);
 		}
 	},
 	
 	/**
 	 * append a subElement
-	 * @param element the sub element to add (of type List)
+	 * @param element the sub element to add (of type ListView)
 	 */
 	"appendSubEl": {
 		value: function (element)
 		{
-			if (this.subs.length === 0)
-				this.setExpandable(true);
+			element.prepareSubEl();
 			this.subs.push(element);
-			this.model.addSubEl(element);
+			this.model.addSubEl(element.model);
 			element.parent = this;
-			this.htmlContents.appendChild(element.htmlContents);
+			this.htmlUl.appendChild(element.htmlContents);
+			this.setExpandable(true);
 		}
 	},
 	
 	/**
 	 * remove a subElement
-	 * @param element the sub element to remove (of type List)
+	 * @param element the sub element to remove (of type ListListView)
 	 */
 	"rmSubEl": {
 		value: function (element)
@@ -229,28 +251,44 @@ Object.defineProperties(ListView.prototype, {
 				this.htmlContents.insertBefore(this.subs[newindex].htmlContents, this.subs[newindex + 1].htmlContents);
 		}
 	},
-
-	// **************************** CALLBACKS ****************************
-	/** expand or not a list item */
-	"onExpand": {
-		value: function ()
-		{
-			if (this.subs.length > 0)
-				this.htmlContents.dataset.expand = this.htmlContents.dataset.expand === "true" ? "false" : "true";
-		}
-	},
-	
-	/** delete an item */
-	"onDelete": {
-		value: function (e)
-		{
-			e.preventDefault();
-			
-			this.parent.rmSubEl(this);
-		}
-	},
 	
 	// **************************** PRIVATE ****************************
+	/**
+	 * transforms the element in a sub element with all the html elements...
+	 */
+	"prepareSubEl": {
+		value: function ()
+		{
+			this.htmlMove = document.createElement("button");
+			this.htmlMove.classList.add("movebtn");
+			this.htmlMove.textContent = "↕";
+			
+			this.htmlText = document.createElement("span");
+			this.htmlText.textContent = this.model.title;
+			this.htmlText.classList.add("textlist");
+			this.htmlText.addEventListener("click", this.onDone);
+			
+			this.htmlAdd = document.createElement("button");
+			this.htmlAdd.classList.add("addbtn");
+			this.htmlAdd.textContent = "+";
+			this.htmlAdd.addEventListener("click", this.onExpand);
+			
+			this.htmlRm = document.createElement("button");
+			this.htmlRm.classList.add("rmbtn");
+			this.htmlRm.textContent = "×";
+			this.htmlRm.addEventListener("click", this.onDelete);
+			
+			this.htmlContents = document.createElement("li");
+			this.htmlContents.appendChild(this.htmlMove);
+			this.htmlContents.appendChild(this.htmlText);
+			this.htmlContents.appendChild(this.htmlAdd);
+			this.htmlContents.appendChild(this.htmlRm);
+			this.htmlContents.appendChild(this.htmlUl);
+			this.setExpandable(this.model.contents.length !== 0);
+			this.setDone(this.model.done);
+		}
+	},
+	
 	/**
 	 * set the item as expandable
 	 * @param isExpandable if true, the item is expandable

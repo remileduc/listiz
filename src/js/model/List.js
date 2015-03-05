@@ -40,20 +40,26 @@ function List ()
 			{
 				var i, size;
 				
-				_done = isDone;
-				
-				if (!_done && this.parent !== null && this.parent.done) // if !done, parent is not done too
-					this.parent.done = false;
-				else if (_done && this.parent !== null && !this.parent.done) // if done
+				if (_done !== isDone)
 				{
-					for (i = 0, size = this.contents.length; i < size; i++) // children are done too
-						this.contents[i].done = _done;
-					for (i = 0, size = this.parent.contents.length; i < size; i++) // if brothers are done, parent is done too
+					_done = isDone;
+					this.fire("done");
+					if (!_done && this.parent !== null && this.parent.done) // if !done, parent is not done too
+						this.parent.done = false;
+					else if (_done) // if done
 					{
-						if (!this.parent.contents[i].done)
-							return;
+						for (i = 0, size = this.contents.length; i < size; i++) // children are done too
+							this.contents[i].done = _done;
+						if (this.parent !== null && !this.parent.done)
+						{
+							for (i = 0, size = this.parent.contents.length; i < size; i++) // if brothers are done, parent is done too
+							{
+								if (!this.parent.contents[i].done)
+									return;
+							}
+							this.parent.done = _done;
+						}
 					}
-					this.parent.done = _done;
 				}
 			}
 		},
@@ -62,6 +68,10 @@ function List ()
 			value: null,
 			enumerable: true,
 			writable: true
+		},
+		
+		"listeners": {
+			value: { done: [] }
 		}
 	});
 	
@@ -81,6 +91,8 @@ Object.defineProperties(List.prototype, {
 	"addSubEl": {
 		value: function (element, position)
 		{
+			if (this.contents.indexOf(element) !== -1)
+				return;
 			if (typeof position === "undefined")
 				this.contents.push(element);
 			else if (position === 0)
@@ -124,12 +136,15 @@ Object.defineProperties(List.prototype, {
 			else
 				this.contents.splice(index, 1);
 			delel.parent = null;
-			for (i = 0, size = this.contents.length; i < size; i++) // if brothers are done, parent is done too
+			if (this.parent !== null)
 			{
-				if (!this.contents[i].done)
-					return;
+				for (i = 0, size = this.contents.length; i < size; i++) // if brothers are done, parent is done too
+				{
+					if (!this.contents[i].done)
+						return;
+				}
+				this.parent.done = true;
 			}
-			this.parent.done = true;
 		}
 	},
 	
@@ -160,6 +175,45 @@ Object.defineProperties(List.prototype, {
 				str += this.contents[i].toString(depth);
 			}
 			return str;
+		}
+	},
+	
+	"addEventListener": {
+		value: function(type, listener)
+		{
+			if (typeof this.listeners[type] !== "undefined")
+				this.listeners[type].push(listener);
+		}
+	},
+
+	"removeEventListener": {
+		value: function(type, listener)
+		{
+			var index;
+			if (typeof this.listeners[type] !== "undefined")
+			{
+				index = this.listeners[type].indexOf(listener);
+				if (index >= 0)
+					this.listeners[type].splice(index, 1);
+			}
+		}
+	},
+	
+	"fire": {
+		value: function(event)
+		{
+			var i, len, evt;
+			if (typeof this.listeners[event] !== "undefined")
+			{
+				len = this.listeners[event].length;
+				evt = { type: event, target: this };
+	
+				for (i = 0; i < len; i++)
+				{
+					console.log("FIRE IN THE HOLE");
+					this.listeners[event][i].call(this, evt);
+				}
+			}
 		}
 	}
 });

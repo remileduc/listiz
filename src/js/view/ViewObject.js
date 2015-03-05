@@ -29,7 +29,7 @@ function ViewObject ()
 	Object.defineProperties(this, {
 		/** the model to show */
 		"model": {
-			value: false,
+			value: null,
 			enumerable: true,
 			writable: true
 		},
@@ -61,6 +61,15 @@ Object.defineProperties(ViewObject.prototype, {
 		{
 			document.querySelector("#title").textContent = this.model.title;
 			document.querySelector("#contents").appendChild(this.htmlContents);
+		}
+	},
+	
+	/** remove the contents of the web page */
+	"hide": {
+		value: function ()
+		{
+			document.querySelector("#title").textContent = "";
+			document.querySelector("#contents").removeChild(this.htmlContents);
 		}
 	}
 });

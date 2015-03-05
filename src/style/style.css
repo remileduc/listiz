@@ -61,19 +61,28 @@ footer
 	display: none;
 }
 
-.notexpandable .textlist:after
+*[data-done="true"] > span
 {
-	content: "" !important;
+	text-decoration: line-through;
+	font-style: italic;
+	color: gray;
 }
 
-.expandable[data-expand="false"] .textlist:after
+*[data-done="false"] > span
 {
-	content: "|+";
+	text-decoration: none;
+	font-style: normal;
+	color: black;
 }
 
-.expandable[data-expand="true"] .textlist:after
+.expandable .addbtn
 {
-	content: "|-";
+	display: inline-block;
+}
+
+.notexpandable .addbtn
+{
+	display: none;
 }
 
 /*********** MEDIA QUERIES ***********/

@@ -18,6 +18,10 @@ function createList ()
 	
 	l.contents[1].addSubEl(new List());
 	l.contents[1].contents[2].title = "third2";
+	l.contents[1].contents[2].done = true;
+	
+	l.contents[1].contents[2].addSubEl(new List());
+	l.contents[1].contents[2].contents[0].title = "fourth";
 	
 	var suppr = new List();
 	l.addSubEl(suppr);
