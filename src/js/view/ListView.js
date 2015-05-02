@@ -250,11 +250,7 @@ Object.defineProperties(ListView.prototype, {
 			this.htmlUl.removeChild(this.subs[index].htmlContents);
 			this.model.rmSubElIndex(index);
 
-			if (index === 0)
-				this.subs.shift();
-			else if (index === this.subs.length - 1)
-				this.subs.pop();
-			else if (index > 0 && index < this.subs.length)
+			if (index >= 0 && index <= this.subs.length)
 				this.subs.splice(index, 1);
 			if (this.subs.length === 0)
 				this.setExpandable(false);

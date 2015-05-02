@@ -94,11 +94,8 @@ Object.defineProperties(List.prototype, {
 			if (this.contents.indexOf(element) !== -1)
 				return;
 			if (typeof position === "undefined")
-				this.contents.push(element);
-			else if (position === 0)
-				this.contents.unshift(element);
-			else
-				this.contents.splice(position, 0, element);
+				position = this.contents.length;
+			this.contents.splice(position, 0, element);
 			element.parent = this;
 			element.done = element.done; // sets the parent / children done member
 		}
@@ -129,21 +126,21 @@ Object.defineProperties(List.prototype, {
 		{
 			var delel = this.contents[index];
 			var i, size;
-			if (index === 0)
-				this.contents.shift();
-			else if (index === this.contents.length - 1)
-				this.contents.pop();
-			else
+			var childdone = true;
+			
+			if (index >= 0 && index <= this.contents.length)
 				this.contents.splice(index, 1);
 			delel.parent = null;
-			if (this.parent !== null)
+			
+			if (this.contents.length > 0)
 			{
-				for (i = 0, size = this.contents.length; i < size; i++) // if brothers are done, parent is done too
+				// we check if all sub-elements are done. If so, we are done too
+				for (i = 0, size = this.contents.length; i < size && childdone; i++) // if brothers are done, parent is done too
 				{
 					if (!this.contents[i].done)
-						return;
+						childdone = false;
 				}
-				this.parent.done = true;
+				this.done = childdone;
 			}
 		}
 	},
