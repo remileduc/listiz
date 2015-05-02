@@ -40,6 +40,7 @@ function createList ()
 var l = createList();
 var lv = new ListView();
 lv.init(l);
+lv.setEditable(false);
 lv.show();
 var s = document.querySelector("section");
 

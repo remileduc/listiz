@@ -29,6 +29,7 @@ body
 {
 	display: flex;
 	flex-flow: column;
+	background: #FA5858;
 }
 
 header, footer
@@ -56,31 +57,47 @@ footer
 }
 
 /*********** LISTS ***********/
-*[data-expand="false"] > ul
+
+/* general */
+.expandbtn
 {
 	display: none;
 }
 
-*[data-done="true"] > span
+.textedit
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	transition: all, 0.5s;
+}
+
+.textedit:focus, .textedit:hover
+{
+	background: rgba(255, 255, 255, 0.5);
+}
+
+[data-done="true"] > .textlist, [data-done="true"] > .textedit
 {
 	text-decoration: line-through;
 	font-style: italic;
 	color: gray;
 }
 
-*[data-done="false"] > span
+/* non-editable */
+[data-editable="false"] [data-expand="false"] > ul, [data-editable="false"] .addbtn, [data-editable="false"] .textedit, [data-editable="false"] .checkdone
 {
-	text-decoration: none;
-	font-style: normal;
-	color: black;
+	display: none;
 }
 
-.expandable .addbtn
+[data-editable="false"] .expandable > .expandbtn
 {
 	display: inline-block;
 }
 
-.notexpandable .addbtn
+/* editable */
+[data-editable="true"] .textlist
 {
 	display: none;
 }

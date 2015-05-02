@@ -32,6 +32,12 @@ function ListView ()
 			enumerable: true,
 			writable: true
 		},
+		
+		/** button to check or not the item */
+		"htmlCehck": {
+			enumerable: true,
+			writable: true
+		},
 
 		/** the input where we show the text */
 		"htmlText": {
@@ -40,7 +46,19 @@ function ListView ()
 		},
 
 		/** button to add */
+		"htmlExpand": {
+			enumerable: true,
+			writable: true
+		},
+
+		/** button to add */
 		"htmlAdd": {
+			enumerable: true,
+			writable: true
+		},
+
+		/** button to add */
+		"htmlEdit": {
 			enumerable: true,
 			writable: true
 		},
@@ -84,7 +102,7 @@ function ListView ()
 				if (this.subs.length > 0)
 				{
 					this.htmlContents.dataset.expand = this.htmlContents.dataset.expand === "true" ? "false" : "true";
-					this.htmlAdd.textContent = this.htmlContents.dataset.expand === "true" ? "-" : "+";
+					this.htmlExpand.textContent = this.htmlContents.dataset.expand === "true" ? "-" : "+";
 				}
 			}).bind(this)
 		},
@@ -123,6 +141,14 @@ function ListView ()
 			{
 				this.setDone(e.type === "done" ? this.model.done : !this.model.done);
 			}).bind(this)
+		},
+		
+		/** call when an item has changed */
+		"onChange": {
+			value: (function (e)
+			{
+				this.htmlText.textContent = this.htmlEdit.value;
+			}).bind(this)
 		}
 	});
 	
@@ -159,6 +185,7 @@ Object.defineProperties(ListView.prototype, {
 		value: function (done)
 		{
 			this.htmlContents.dataset.done = done;
+			this.htmlCheck.checked = done;
 			if (this.model.done !== done)
 				this.model.done = done;
 		}
@@ -263,15 +290,37 @@ Object.defineProperties(ListView.prototype, {
 			this.htmlMove.classList.add("movebtn");
 			this.htmlMove.textContent = "↕";
 			
+			this.htmlCheck = document.createElement("input");
+			this.htmlCheck.value = "";
+			this.htmlCheck.setAttribute("type", "checkbox");
+			this.htmlCheck.classList.add("checkdone");
+			this.htmlCheck.addEventListener("click", this.onDone);
+			
 			this.htmlText = document.createElement("span");
 			this.htmlText.textContent = this.model.title;
 			this.htmlText.classList.add("textlist");
 			this.htmlText.addEventListener("click", this.onDone);
 			
+			this.htmlEdit = document.createElement("input");
+			this.htmlEdit.value = this.model.title;
+			this.htmlEdit.setAttribute("type", "text");
+			this.htmlEdit.setAttribute("placeholder", "Écrivez votre tâche ici");
+			this.htmlEdit.setAttribute("required", "required");
+			this.htmlEdit.setAttribute("autocomplete", "off");
+			this.htmlEdit.setAttribute("inputmode", "latin-prose");
+			this.htmlEdit.setAttribute("spellcheck", "true");
+			this.htmlEdit.classList.add("textedit");
+			this.htmlEdit.addEventListener("input", this.onChange);
+			
+			this.htmlExpand = document.createElement("button");
+			this.htmlExpand.classList.add("expandbtn");
+			this.htmlExpand.textContent = "+";
+			this.htmlExpand.addEventListener("click", this.onExpand);
+			
 			this.htmlAdd = document.createElement("button");
 			this.htmlAdd.classList.add("addbtn");
 			this.htmlAdd.textContent = "+";
-			this.htmlAdd.addEventListener("click", this.onExpand);
+			this.htmlAdd.addEventListener("click", this.onAppend);
 			
 			this.htmlRm = document.createElement("button");
 			this.htmlRm.classList.add("rmbtn");
@@ -280,7 +329,10 @@ Object.defineProperties(ListView.prototype, {
 			
 			this.htmlContents = document.createElement("li");
 			this.htmlContents.appendChild(this.htmlMove);
+			this.htmlContents.appendChild(this.htmlCheck);
 			this.htmlContents.appendChild(this.htmlText);
+			this.htmlContents.appendChild(this.htmlEdit);
+			this.htmlContents.appendChild(this.htmlExpand);
 			this.htmlContents.appendChild(this.htmlAdd);
 			this.htmlContents.appendChild(this.htmlRm);
 			this.htmlContents.appendChild(this.htmlUl);

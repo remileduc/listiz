@@ -209,10 +209,7 @@ Object.defineProperties(List.prototype, {
 				evt = { type: event, target: this };
 	
 				for (i = 0; i < len; i++)
-				{
-					console.log("FIRE IN THE HOLE");
 					this.listeners[event][i].call(this, evt);
-				}
 			}
 		}
 	}

@@ -45,6 +45,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			// test retrieve parameters // TODO enlever
 			var daop = new DAOParameters(db);
 			daop.get(onDAORetrieveSuccess);
+			var modEdit = false;
+			var editbtn = document.querySelector("#editbtn");
+			editbtn.addEventListener("click", function (e) {
+				modEdit = !modEdit;
+				editbtn.textContent = modEdit ? "View" : "Edit";
+				lv.setEditable(modEdit);
+			});
 		}
 		else
 		{

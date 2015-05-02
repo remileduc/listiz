@@ -37,6 +37,7 @@ function ViewObject ()
 
 		/** bool: if true, the user can change the values in the page */
 		"editable": {
+			value: false,
 			enumerable: true,
 			writable: true
 		},
@@ -70,6 +71,19 @@ Object.defineProperties(ViewObject.prototype, {
 		{
 			document.querySelector("#title").textContent = "";
 			document.querySelector("#contents").removeChild(this.htmlContents);
+		}
+	},
+	
+	/**
+	 * Change the view to set it editable or not
+	 * @param editable if true, the view is editable
+	 */
+	"setEditable": {
+		writable: true,
+		value: function (editable)
+		{
+			this.editable = editable;
+			this.htmlContents.dataset.editable = this.editable;
 		}
 	}
 });
